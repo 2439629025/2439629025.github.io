@@ -40,7 +40,10 @@
 </head>
 <body>
     <h1>评分问卷</h1>
-    <form id="scoreForm">
+
+    <!-- 评估 1: 盆底健康评估 -->
+    <h2>评估 1: 盆底健康评估</h2>
+    <form id="scoreForm1">
         <table>
             <thead>
                 <tr>
@@ -80,7 +83,7 @@
                 <tr>
                     <td>你有起夜上厕所的情况吗？频率多少？</td>
                     <td>
-                        <select name="q4" required>
+                        <select name="q3" required>
                             <option value="0">没有</option>
                             <option value="1">1次</option>
                             <option value="2">2次</option>
@@ -93,7 +96,7 @@
                 <tr>
                     <td>你是否有时会经历突然的尿意并马上开始不受控制地漏尿？</td>
                     <td>
-                        <select name="q5" required>
+                        <select name="q4" required>
                             <option value="0">否</option>
                             <option value="2">是</option>
                         </select>
@@ -103,7 +106,7 @@
                 <tr>
                     <td>你是否会预防性地上厕所？</td>
                     <td>
-                        <select name="q6" required>
+                        <select name="q5" required>
                             <option value="0">否</option>
                             <option value="2">是</option>
                         </select>
@@ -113,7 +116,7 @@
                 <tr>
                     <td>你是否特别注意不要多喝水？</td>
                     <td>
-                        <select name="q7" required>
+                        <select name="q6" required>
                             <option value="0">否</option>
                             <option value="2">是</option>
                         </select>
@@ -123,7 +126,7 @@
                 <tr>
                     <td>你的盆底是否会感到向下的压力？</td>
                     <td>
-                        <select name="q8" required>
+                        <select name="q7" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -133,7 +136,7 @@
                 <tr>
                     <td>你有时是否感到身体核心的稳定性缺乏？</td>
                     <td>
-                        <select name="q9" required>
+                        <select name="q8" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -143,7 +146,7 @@
                 <tr>
                     <td>你的盆底处是否感到过疼痛？</td>
                     <td>
-                        <select name="q10" required>
+                        <select name="q9" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -153,7 +156,7 @@
                 <tr>
                     <td>你的下腹是否感到过疼痛？</td>
                     <td>
-                        <select name="q11" required>
+                        <select name="q10" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -163,7 +166,7 @@
                 <tr>
                     <td>你的背部是否感到过疼痛？</td>
                     <td>
-                        <select name="q12" required>
+                        <select name="q11" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -173,7 +176,7 @@
                 <tr>
                     <td>你排便时是否感到过疼痛？</td>
                     <td>
-                        <select name="q13" required>
+                        <select name="q12" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -183,7 +186,7 @@
                 <tr>
                     <td>你在性生活中是否感到过疼痛？</td>
                     <td>
-                        <select name="q14" required>
+                        <select name="q13" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -193,7 +196,7 @@
                 <tr>
                     <td>性高潮时，肌肉是否收缩较弱？</td>
                     <td>
-                        <select name="q15" required>
+                        <select name="q14" required>
                             <option value="0">否</option>
                             <option value="1">是</option>
                         </select>
@@ -202,24 +205,129 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" onclick="calculateScore()">计算总分</button>
+        <button type="button" onclick="calculateScore('scoreForm1', 'totalScore1', 'advice1')">计算总分</button>
     </form>
-    <h2 id="totalScore">总得分: 0</h2>
+    <h2 id="totalScore1">总得分: 0</h2>
+    <p id="advice1"></p>
+
+
+    <h2>评估 2: 肌肉测试</h2>
+    <form id="muscleTestForm">
+        <table>
+            <thead>
+                <tr>
+                    <th>测试类型</th>
+                    <th>分数标准</th>
+                    <th>得分</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>K=力量，请你将盆底向上提拉:0~5分用于评定你完成这个动作的肌肉力量，感受到的收缩力多大;如果你的评分为0分，就无须继续此项测试了，直接读测试结果评价即可。</td>
+                    <td>
+                        <select name="k_power" required>
+                            <option value="0">0 = 没有感到任何的收缩（只是移动）</option>
+                            <option value="1">1 = 感受到微弱的收缩</option>
+                            <option value="2">2 = 感到中等强度的收缩</option>
+                            <option value="3">3 = 感到明显的收缩</option>
+                            <option value="4">4 = 感到很强的收缩</option>
+                            <option value="5">5 = 感到非常强的收缩</option>
+                        </select>
+                    </td>
+                    <td><input type="number" readonly></td>
+                </tr>
+                <tr>
+                    <td>A=耐力，请你再次尝试，同时查看时间。</td>
+                    <td>
+                        你可以持续保持收缩多久？（秒）<br>
+                        <input type="number" name="a_endurance" min="0" max="10" required>
+                    </td>
+                    <td><input type="number" readonly></td>
+                </tr>
+                <tr>
+                    <td>W=重复，假设你可以保持5秒:5秒之后你可以接连重复这样操作多少次?每次重复之间请你休息4秒。当你意识到力量感逐渐变弱时，可以停止这项练习。完成并记录之后，进行10次舒适的呼吸，将气送入腹部。</td>
+                    <td>
+                        你可以重复多少次这个动作？（1次？10次？）<br>
+                        <input type="number" name="w_repeats" min="0" max="10" required>
+                    </td>
+                    <td><input type="number" readonly></td>
+                </tr>
+                <tr>
+                    <td>S=速度能力，你最快可以接连拉伸你的盆底几次?。</td>
+                    <td>
+                        你可以以最快速度收缩和放松多少次？<br>
+                        <input type="number" name="s_speed" min="0" max="10" required>
+                    </td>
+                    <td><input type="number" readonly></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" onclick="calculateMuscleTest()">计算总分</button>
+    </form>
+    <h2 id="muscleTestTotalScore">总得分: 0</h2>
+    <p id="muscleTestAdvice"></p>
 
     <script>
-        function calculateScore() {
-            const form = document.getElementById('scoreForm');
+        // 计算评估1的分数
+        function calculateScore(formId, totalScoreId, adviceId) {
+            const form = document.getElementById(formId);
             const scoreElements = form.querySelectorAll('select');
             let totalScore = 0;
 
             scoreElements.forEach((select, index) => {
                 const score = parseInt(select.value, 10);
                 totalScore += score;
-                // 填充得分到对应的输入框
                 form.querySelectorAll('input[type="number"]')[index].value = score;
             });
 
-            document.getElementById('totalScore').innerText = `总得分: ${totalScore}`;
+            document.getElementById(totalScoreId).innerText = `总得分: ${totalScore}`;
+
+            // 给出建议
+            let advice = "";
+            if (totalScore >= 0 && totalScore <= 3) {
+                advice = "你的健康状况良好，请继续保持！";
+            } else if (totalScore >= 4 && totalScore <= 10) {
+                advice = "有轻微问题，建议进一步观察或调整习惯。";
+            } else if (totalScore > 10 && totalScore <= 20) {
+                advice = "问题较为明显，建议咨询医生或进行康复训练。";
+            } else if (totalScore > 20 && totalScore <= 35) {
+                advice = "问题严重，建议尽快寻求医疗帮助。";
+            }
+            document.getElementById(adviceId).innerText = advice;
+        }
+
+        // 计算肌肉测试的分数
+        function calculateMuscleTest() {
+            const form = document.getElementById('muscleTestForm');
+            const power = parseInt(form.querySelector('select[name="k_power"]').value);
+            const endurance = parseInt(form.querySelector('input[name="a_endurance"]').value);
+            const repeats = parseInt(form.querySelector('input[name="w_repeats"]').value);
+            const speed = parseInt(form.querySelector('input[name="s_speed"]').value);
+
+            // 计算总分
+            const totalScore = power + endurance + repeats + speed;
+
+            // 更新分数
+            form.querySelectorAll('input[type="number"]')[0].value = power;
+            form.querySelectorAll('input[type="number"]')[1].value = endurance;
+            form.querySelectorAll('input[type="number"]')[2].value = repeats;
+            form.querySelectorAll('input[type="number"]')[3].value = speed;
+
+            // 显示总分
+            document.getElementById('muscleTestTotalScore').innerText = `总得分: ${totalScore}`;
+
+            // 给出建议
+            let advice = "";
+            if (totalScore >= 0 && totalScore <= 10) {
+                advice = "力量和耐力较低，建议加强训练。";
+            } else if (totalScore > 10 && totalScore <= 20) {
+                advice = "力量和耐力中等，可以考虑提高训练强度。";
+            } else if (totalScore > 20 && totalScore <= 30) {
+                advice = "表现不错，但仍有提升空间。";
+            } else if (totalScore > 30) {
+                advice = "表现优秀，继续保持！";
+            }
+            document.getElementById('muscleTestAdvice').innerText = advice;
         }
     </script>
 </body>
