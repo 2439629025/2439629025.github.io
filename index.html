@@ -284,10 +284,12 @@
 
             // 给出建议
             let advice = "";
-            if (totalScore >= 0 && totalScore <= 3) {
+            if (totalScore >= 0 && totalScore <= 0) {
                 advice = "你的健康状况良好，请继续保持！";
+            } else if (totalScore >= 1 && totalScore <= 3) {
+                advice = "建议您多关注您的盆底。";
             } else if (totalScore >= 4 && totalScore <= 10) {
-                advice = "有轻微问题，建议进一步观察或调整习惯。";
+                advice = "您需要重视您的盆底，建议您咨询医生。";
             } else if (totalScore > 10 && totalScore <= 20) {
                 advice = "问题较为明显，建议咨询医生或进行康复训练。";
             } else if (totalScore > 20 && totalScore <= 35) {
