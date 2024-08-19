@@ -219,22 +219,24 @@
                     <th>测试类型</th>
                     <th>分数标准</th>
                     <th>得分</th>
+                    <th>建议</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>K=力量，请你将盆底向上提拉:0~5分用于评定你完成这个动作的肌肉力量，感受到的收缩力多大;如果你的评分为0分，就无须继续此项测试了，直接读测试结果评价即可。</td>
+                    <td>K=力量，请你将盆底向上提拉: 0~5分用于评定你完成这个动作的肌肉力量，感受到的收缩力多大。</td>
                     <td>
                         <select name="k_power" required>
-                            <option value="0">0 = 没有感到任何的收缩（只是移动）</option>
-                            <option value="1">1 = 感受到微弱的收缩</option>
-                            <option value="2">2 = 感到中等强度的收缩</option>
-                            <option value="3">3 = 感到明显的收缩</option>
-                            <option value="4">4 = 感到很强的收缩</option>
-                            <option value="5">5 = 感到非常强的收缩</option>
+                            <option value="0">0 = 没有感到任何的收缩(只是移动)</option>
+                            <option value="1">1 = 感受到微弱的收缩(轻微的抽拉)</option>
+                            <option value="2">2 = 感到中等强度的收缩(明显可感知的抽拉)</option>
+                            <option value="3">3 = 感到明显的收缩(稍微感到会阴被拉起)</option>
+                            <option value="4">4 = 感到很强的收缩(明显感到会阴被拉起)</option>
+                            <option value="5">5 = 感到非常强的收缩(非常强劲的力量，仿佛会阴被吸了进去)</option>
                         </select>
                     </td>
-                    <td><input type="number" readonly></td>
+                    <td><input id="k_power_score" type="number" readonly></td>
+                    <td><p class="advice" id="k_power_advice"></p></td>
                 </tr>
                 <tr>
                     <td>A=耐力，请你再次尝试，同时查看时间。</td>
@@ -242,32 +244,108 @@
                         你可以持续保持收缩多久？（秒）<br>
                         <input type="number" name="a_endurance" min="0" max="10" required>
                     </td>
-                    <td><input type="number" readonly></td>
+                    <td><input id="a_endurance_score" type="number" readonly></td>
+                    <td><p class="advice" id="a_endurance_advice"></p></td>
                 </tr>
                 <tr>
-                    <td>W=重复，假设你可以保持5秒:5秒之后你可以接连重复这样操作多少次?每次重复之间请你休息4秒。当你意识到力量感逐渐变弱时，可以停止这项练习。完成并记录之后，进行10次舒适的呼吸，将气送入腹部。</td>
+                    <td>W=重复，假设你可以保持5秒:5秒之后你可以接连重复多少次？</td>
                     <td>
                         你可以重复多少次这个动作？（1次？10次？）<br>
                         <input type="number" name="w_repeats" min="0" max="10" required>
                     </td>
-                    <td><input type="number" readonly></td>
+                    <td><input id="w_repeats_score" type="number" readonly></td>
+                    <td><p class="advice" id="w_repeats_advice"></p></td>
                 </tr>
                 <tr>
-                    <td>S=速度能力，你最快可以接连拉伸你的盆底几次?。</td>
+                    <td>S=速度能力，你最快可以接连拉伸你的盆底几次？</td>
                     <td>
                         你可以以最快速度收缩和放松多少次？<br>
                         <input type="number" name="s_speed" min="0" max="10" required>
                     </td>
-                    <td><input type="number" readonly></td>
+                    <td><input id="s_speed_score" type="number" readonly></td>
+                    <td><p class="advice" id="s_speed_advice"></p></td>
                 </tr>
             </tbody>
         </table>
-        <button type="button" onclick="calculateMuscleTest()">计算总分</button>
+        <button type="button" onclick="calculateMuscleTest()">计算分数并提供建议</button>
     </form>
     <h2 id="muscleTestTotalScore">总得分: 0</h2>
-    <p id="muscleTestAdvice"></p>
+    <p id="overall_advice"></p>
 
     <script>
+        // 计算肌肉测试的分数和提供建议
+        function calculateMuscleTest() {
+            const form = document.getElementById('muscleTestForm');
+
+            // 获取各部分的分数
+            const power = parseInt(form.querySelector('select[name="k_power"]').value);
+            const endurance = parseInt(form.querySelector('input[name="a_endurance"]').value);
+            const repeats = parseInt(form.querySelector('input[name="w_repeats"]').value);
+            const speed = parseInt(form.querySelector('input[name="s_speed"]').value);
+
+            // 将分数正确显示到相应的输入框中
+            document.getElementById('k_power_score').value = power;
+            document.getElementById('a_endurance_score').value = endurance;
+            document.getElementById('w_repeats_score').value = repeats;
+            document.getElementById('s_speed_score').value = speed;
+
+            // 计算总分
+            const totalScore = power + endurance + repeats + speed;
+
+            // 显示总分
+            document.getElementById('muscleTestTotalScore').innerText = `总得分: ${totalScore}`;
+
+            // 各个测试的建议
+            let kPowerAdvice = "";
+            if (power <= 1) {
+                kPowerAdvice = "盆底感知训练为主。";
+            } else if (power <= 3) {
+                kPowerAdvice = "盆底肌慢缩和快缩肌纤维强化训练。";
+            } else if (power <= 4) {
+                kPowerAdvice = "您的盆底功能情况良好，继续坚持";
+            } else {
+                kPowerAdvice = "肌肉力量很好，继续保持！";
+            }
+            document.getElementById('k_power_advice').innerText = kPowerAdvice;
+
+            let aEnduranceAdvice = "";
+            if (endurance <= 7) {
+                aEnduranceAdvice = "加强盆底肌力量锻炼。";
+            } else if (endurance <= 10) {
+                aEnduranceAdvice = "盆底肌耐力情况良好，继续坚持。";
+            } 
+            document.getElementById('a_endurance_advice').innerText = aEnduranceAdvice;
+
+            let wRepeatsAdvice = "";
+            if (repeats <= 7) {
+                wRepeatsAdvice = "加强盆底慢缩肌纤维锻炼。";
+            } else if (repeats <= 10) {
+                wRepeatsAdvice = "盆底慢缩肌力量良好，继续坚持。";
+            } 
+            document.getElementById('w_repeats_advice').innerText = wRepeatsAdvice;
+
+            let sSpeedAdvice = "";
+            if (speed <= 7) {
+                sSpeedAdvice = "加强快缩肌纤维锻炼。";
+            } else if (speed <= 10) {
+                sSpeedAdvice = "盆底快缩肌力量良好，继续坚持。";
+            }
+            document.getElementById('s_speed_advice').innerText = sSpeedAdvice;
+
+            // 综合建议
+            let overallAdvice = "";
+            if (totalScore <= 10) {
+                overallAdvice = "整体表现较弱，建议增加力量、耐力、重复和速度的训练。";
+            } else if (totalScore <= 20) {
+                overallAdvice = "整体表现中等，可以增加训练强度以进一步提高。";
+            } else if (totalScore <= 30) {
+                overallAdvice = "整体表现不错，继续保持并适度增加挑战。";
+            } else {
+                overallAdvice = "整体表现非常优秀，继续保持！";
+            }
+            document.getElementById('overall_advice').innerText = overallAdvice;
+        }
+ 
         // 计算评估1的分数
         function calculateScore(formId, totalScoreId, adviceId) {
             const form = document.getElementById(formId);
@@ -296,40 +374,6 @@
                 advice = "问题严重，建议尽快寻求医疗帮助。";
             }
             document.getElementById(adviceId).innerText = advice;
-        }
-
-        // 计算肌肉测试的分数
-        function calculateMuscleTest() {
-            const form = document.getElementById('muscleTestForm');
-            const power = parseInt(form.querySelector('select[name="k_power"]').value);
-            const endurance = parseInt(form.querySelector('input[name="a_endurance"]').value);
-            const repeats = parseInt(form.querySelector('input[name="w_repeats"]').value);
-            const speed = parseInt(form.querySelector('input[name="s_speed"]').value);
-
-            // 计算总分
-            const totalScore = power + endurance + repeats + speed;
-
-            // 更新分数
-            form.querySelectorAll('input[type="number"]')[0].value = power;
-            form.querySelectorAll('input[type="number"]')[1].value = endurance;
-            form.querySelectorAll('input[type="number"]')[2].value = repeats;
-            form.querySelectorAll('input[type="number"]')[3].value = speed;
-
-            // 显示总分
-            document.getElementById('muscleTestTotalScore').innerText = `总得分: ${totalScore}`;
-
-            // 给出建议
-            let advice = "";
-            if (totalScore >= 0 && totalScore <= 10) {
-                advice = "力量和耐力较低，建议加强训练。";
-            } else if (totalScore > 10 && totalScore <= 20) {
-                advice = "力量和耐力中等，可以考虑提高训练强度。";
-            } else if (totalScore > 20 && totalScore <= 30) {
-                advice = "表现不错，但仍有提升空间。";
-            } else if (totalScore > 30) {
-                advice = "表现优秀，继续保持！";
-            }
-            document.getElementById('muscleTestAdvice').innerText = advice;
         }
     </script>
 </body>
